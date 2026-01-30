@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -23,7 +24,7 @@ class NotificationService {
     await _notifications.initialize(initSettings);
 
     // Create high-priority notification channel
-    const androidChannel = AndroidNotificationChannel(
+    final androidChannel = AndroidNotificationChannel(
       'trading_signals',
       'Trading Signals',
       description: 'High-priority trading signal notifications',
@@ -31,7 +32,7 @@ class NotificationService {
       playSound: true,
       enableVibration: true,
       enableLights: true,
-      ledColor: Color(0xFF2196F3),
+      ledColor: const Color(0xFF2196F3),
       showBadge: true,
     );
 
@@ -42,7 +43,7 @@ class NotificationService {
   }
 
   Future<void> showSignalNotification(String signalType) async {
-    const androidDetails = AndroidNotificationDetails(
+    final androidDetails = AndroidNotificationDetails(
       'trading_signals',
       'Trading Signals',
       channelDescription: 'High-priority trading signal notifications',
@@ -52,7 +53,7 @@ class NotificationService {
       playSound: true,
       enableVibration: true,
       enableLights: true,
-      ledColor: Color(0xFF2196F3),
+      ledColor: const Color(0xFF2196F3),
       ledOnMs: 1000,
       ledOffMs: 500,
       visibility: NotificationVisibility.public,
@@ -64,7 +65,7 @@ class NotificationService {
       ),
     );
 
-    const notificationDetails = NotificationDetails(
+    final notificationDetails = NotificationDetails(
       android: androidDetails,
     );
 
