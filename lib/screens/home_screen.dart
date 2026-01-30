@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onChanged: _toggleNotifications,
                         title: const Text('Enable Notifications'),
                         subtitle: const Text('Toggle to control signal alerts'),
-                        activeColor: Colors.green,
+                        activeTrackColor: Colors.green,
                         contentPadding: EdgeInsets.zero,
                       ),
                     ],
