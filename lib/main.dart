@@ -8,16 +8,21 @@ import 'screens/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize services
-  await StorageService.instance.init();
-  await NotificationService.instance.init();
-  await SignalManager.instance.init();
-  
-  // Set preferred orientations
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  try {
+    // Initialize services with error handling
+    await StorageService.instance.init();
+    await NotificationService.instance.init();
+    await SignalManager.instance.init();
+    
+    // Set preferred orientations
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  } catch (e) {
+    // Log error but continue app launch
+    print('Initialization error: $e');
+  }
   
   runApp(const SignalNotifierApp());
 }
