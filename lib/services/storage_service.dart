@@ -5,7 +5,7 @@ class StorageService {
   factory StorageService() => instance;
   StorageService._internal();
 
-  late SharedPreferences _prefs;
+  SharedPreferences? _prefs;
 
   // Storage keys
   static const String _keyNotificationEnabled = 'notification_enabled';
@@ -21,39 +21,43 @@ class StorageService {
 
   // Check if we need to reset daily data
   Future<void> _checkDailyReset() async {
+    if (_prefs == null) return;
+    
     final today = DateTime.now().toIso8601String().split('T')[0];
-    final lastReset = _prefs.getString(_keyLastResetDate);
+    final lastReset = _prefs!.getString(_keyLastResetDate);
     
     if (lastReset != today) {
       // New day - reset last signal
-      await _prefs.remove(_keyLastSignalType);
-      await _prefs.setString(_keyLastResetDate, today);
+      await _prefs!.remove(_keyLastSignalType);
+      await _prefs!.setString(_keyLastResetDate, today);
     }
   }
 
   // Notification enabled state
-  bool get notificationEnabled => _prefs.getBool(_keyNotificationEnabled) ?? true;
+  bool get notificationEnabled => _prefs?.getBool(_keyNotificationEnabled) ?? true;
   
   Future<void> setNotificationEnabled(bool enabled) async {
-    await _prefs.setBool(_keyNotificationEnabled, enabled);
+    await _prefs?.setBool(_keyNotificationEnabled, enabled);
   }
 
   // Last signal type
-  String? get lastSignalType => _prefs.getString(_keyLastSignalType);
+  String? get lastSignalType => _prefs?.getString(_keyLastSignalType);
   
   Future<void> setLastSignalType(String signalType) async {
-    await _prefs.setString(_keyLastSignalType, signalType);
+    await _prefs?.setString(_keyLastSignalType, signalType);
   }
 
   // Reset daily memory (called at 9:17 AM)
   Future<void> resetDailyMemory() async {
+    if (_prefs == null) return;
+    
     final today = DateTime.now().toIso8601String().split('T')[0];
-    await _prefs.remove(_keyLastSignalType);
-    await _prefs.setString(_keyLastResetDate, today);
+    await _prefs!.remove(_keyLastSignalType);
+    await _prefs!.setString(_keyLastResetDate, today);
   }
 
   // Clear all data (for testing)
   Future<void> clearAll() async {
-    await _prefs.clear();
+    await _prefs?.clear();
   }
 }
