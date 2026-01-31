@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:torch_light/torch_light.dart';
 
 class NotificationService {
   static final NotificationService instance = NotificationService._internal();
@@ -75,5 +76,26 @@ class NotificationService {
       'Signal Type: $signalType\nTap to open app',
       notificationDetails,
     );
+    
+    // Blink flashlight 3 times
+    await _blinkFlashlight();
+  }
+  
+  Future<void> _blinkFlashlight() async {
+    try {
+      // Check if flashlight is available
+      if (await TorchLight.isTorchAvailable()) {
+        // Blink 3 times
+        for (int i = 0; i < 3; i++) {
+          await TorchLight.enableTorch();
+          await Future.delayed(const Duration(milliseconds: 200));
+          await TorchLight.disableTorch();
+          await Future.delayed(const Duration(milliseconds: 200));
+        }
+      }
+    } catch (e) {
+      // Flashlight not available or permission denied - continue without it
+      debugPrint('Flashlight error: $e');
+    }
   }
 }
