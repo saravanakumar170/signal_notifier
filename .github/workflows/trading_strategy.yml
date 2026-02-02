@@ -1,0 +1,35 @@
+name: Nifty Trading Strategy
+
+on:
+  schedule:
+    # Runs every 2 minutes from 3:47 AM to 10:00 AM UTC (9:17 AM to 3:30 PM IST)
+    # Monday to Friday only
+    - cron: '47-59/2 3 * * 1-5'  # 9:17 AM - 9:59 AM IST
+    - cron: '*/2 4-9 * * 1-5'     # 10:00 AM - 3:00 PM IST
+    - cron: '0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 10 * * 1-5'  # 3:00 PM - 3:30 PM IST
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  run-strategy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+      working-directory: ./strategy
+      
+    - name: Run trading strategy
+      env:
+        FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      run: |
+        python main.py
+      working-directory: ./strategy

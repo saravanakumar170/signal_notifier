@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037459827178",
+    "project_id": "signalnotifier-ae932",
+    "storage_bucket": "signalnotifier-ae932.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037459827178:android:fa29c2591a95da2908ea93",
+        "android_client_info": {
+          "package_name": "com.example.signal_notifier"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE-egkyOmrbYmVAlSDYLfvk-AkHqPxPKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
