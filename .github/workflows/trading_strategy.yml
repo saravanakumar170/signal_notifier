@@ -2,11 +2,10 @@ name: Nifty Trading Strategy
 
 on:
   schedule:
-    # Runs every 2 minutes from 3:47 AM to 10:00 AM UTC (9:17 AM to 3:30 PM IST)
+    # Runs every 5 minutes from 3:45 AM to 10:00 AM UTC (9:15 AM to 3:30 PM IST)
     # Monday to Friday only
-    - cron: '47-59/2 3 * * 1-5'  # 9:17 AM - 9:59 AM IST
-    - cron: '*/2 4-9 * * 1-5'     # 10:00 AM - 3:00 PM IST
-    - cron: '0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 10 * * 1-5'  # 3:00 PM - 3:30 PM IST
+    # Note: GitHub Actions has minimum 5-minute interval for scheduled workflows
+    - cron: '*/5 3-10 * * 1-5'  # Every 5 minutes during market hours
   workflow_dispatch: # Allows manual trigger
 
 jobs:
